@@ -27,7 +27,7 @@ public class QueryPerson {
 
 	}
 
-	/*@After
+	@After
 	public void destory() {
 		System.out.println("end!");
 		// 顺序3--(关闭)提交事务
@@ -35,11 +35,11 @@ public class QueryPerson {
 		// 顺序4--关闭会话
 		session.close();
 
-	}*/
+	}
 
 	@Test
 	public void searchPerson() {
-		Query query = session.createQuery("from Person");
+		Query query = session.createQuery("SELECT person FROM Person person WHERE person.id = :id");
 		System.out.println("print query：" + query.toString());
 		java.util.List list = query.list();
 		System.out.println("print list:" + list.toString());

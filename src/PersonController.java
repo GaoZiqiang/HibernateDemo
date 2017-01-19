@@ -4,15 +4,16 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.transform.AliasToBeanResultTransformer;
+
 
 public class PersonController {
 
 	private Session session = null;
 
 	public static void main(String[] args) {
-		
+		new PersonController().init();
 		new PersonController().savePerson();
-		// new PersonController().search();
 		new PersonController().destroy();
 	}
 
@@ -40,7 +41,6 @@ public class PersonController {
 
 	// 插入数据
 	public void savePerson() {
-		new PersonController().init();
 		System.out.println(" start saving!");
 		// 生成person对象
 		// Person person = new Person(2, "gaoziqiang", "111", "boy", "163.com");
@@ -63,7 +63,8 @@ public class PersonController {
 	public void search() {
 		// 生成person对象
 		// Person person2 = new Person(14, "gaohan", "222", "girl", "qq.com");
-		Query query = session.createQuery("from Person");
+		Query query = session.createQuery("select id, name from person");
+		query.setResultTransformer(new AliasToBeanResultTransformer(Person.class));
 		System.out.println(query.toString());
 		java.util.List list = query.list();
 		System.out.println(list.toString());
